@@ -31,8 +31,8 @@ jobs:
           cd ${{ matrix.project }}
           chmod +x mvnw
           ./mvnw clean install
-      - name: Copy JAR file
-        run: >
-          mkdir -p ch09/course-tracker-app-dockerfile/target
-
-          cp ${{ matrix.project }}/target/*.jar ch09/course-tracker-app-dockerfile/target/
+      - name: Upload JAR file
+        uses: actions/upload-artifact@v3
+        with:
+          name: application-jar
+          path: ${{ matrix.project }}/target/*.jar
