@@ -6,8 +6,7 @@ on:
       - main
   push:
     branches:
-      - pre-prod
-        main
+      - main
 jobs:
   build:
     name: Build ${{ matrix.project }}
