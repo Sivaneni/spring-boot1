@@ -20,12 +20,12 @@
 		<java.version>17</java.version>
 	</properties>
 	<repositories>
-		<repository>
-			<id>splunk-artifactory</id>
-			<name>Splunk Releases</name>
-			<url>https://splunk.artifactoryonline.com/artifactory/ext-releases-local</url>
-		</repository>
-	</repositories>
+    <repository>
+        <id>splunk-releases</id>
+        <url>https://splunk.jfrog.io/splunk/ext-releases-local</url>
+    </repository>
+</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
