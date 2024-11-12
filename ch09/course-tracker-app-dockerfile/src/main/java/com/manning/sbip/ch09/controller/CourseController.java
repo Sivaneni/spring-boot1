@@ -12,9 +12,14 @@ import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 
+import com.manning.sbip.ch09.util.Mapper;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Controller
 public class CourseController {
-
+    Logger logger = LogManager.getLogger(CourseController.class);
     private final CourseService courseService;
 
     public CourseController(CourseService courseService) {
@@ -39,10 +44,11 @@ public class CourseController {
     }
 
     @PostMapping("/addcourse")
-    public String addCourse(@Valid Course course, BindingResult result, Model model){
+    public String addCourse(@Valid Course course, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "add-course";
         }
+        logger.info("CourseController:addCourse request payload {} ", Mapper.mapToJsonString(course));
         courseService.createCourse(course);
         model.addAttribute("courses", courseService.findAllCourses());
         return "redirect:/index";
@@ -50,6 +56,7 @@ public class CourseController {
 
     @GetMapping("/update/{id}")
     public String showUpdateCourseForm(@PathVariable("id") Long id, Model model) {
+        logger.info("CourseController:UpdateCourseForm request id {} ", id.toString());
         model.addAttribute("course", courseService.findCourseById(id).get());
         return "update-course";
     }
@@ -60,6 +67,7 @@ public class CourseController {
             course.setId(id);
             return "update-course";
         }
+        logger.info("CourseController:UpdateCourse request id {} ", id.toString());
         courseService.updateCourse(course);
         model.addAttribute("courses", courseService.findAllCourses());
         return "redirect:/index";
@@ -72,4 +80,3 @@ public class CourseController {
         return "redirect:/index";
     }
 }
-
