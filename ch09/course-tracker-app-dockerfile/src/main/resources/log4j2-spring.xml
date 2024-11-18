@@ -7,9 +7,9 @@
         </Console>
         <SplunkHttp
                 name="splunkhttp"
-                url=${env:SPLUNK_URL}
-                token=${env:SPLUNK_TOKEN}
-                host=${env:SPLUNK_HOST}
+                url="${env:SPLUNK_URL}"
+                token="${env:SPLUNK_TOKEN}"
+                host="${env:SPLUNK_HOST}"
                 index="order_ui_dev"
                 type="raw"
                 source="http-event-logs"
