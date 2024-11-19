@@ -1,17 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-     <appender name="SPLUNK" class="ch.qos.logback.core.net.ssl.SSLTCPAppender">
-       <remoteHost>splunk-container</remoteHost>
-       <port>8088</port>
-       <ssl>
-         <keyStore>splunk.jks</keyStore>
-         <keyStorePassword>password</keyStorePassword>
-       </ssl>
-       <encoder>
-         <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-       </encoder>
-     </appender>
-     <root level="info">
-       <appender-ref ref="SPLUNK" />
-     </root>
-   </configuration>
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <target>SYSTEM_OUT</target>
+    <encoder>
+      <pattern>%style{%d{ISO8601}} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{10}}{bright,yellow}: %msg%n%throwable</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="splunkhttp" class="ch.qos.logback.more.appenders.SplunkHttpAppender">
+    <url>https://splunk-container:8088</url>
+    <token>${env:SPLUNK_TOKEN}</token>
+    <host>${env:SPLUNK_HOST}</host>
+    <index>order_ui_dev</index>
+    <type>raw</type>
+    <source>http-event-logs</source>
+    <sourcetype>log4j</sourcetype>
+    <messageFormat>text</messageFormat>
+    <disableCertificateValidation>false</disableCertificateValidation>
+    <ssl>
+      <keyStore>splunk.jks</keyStore>
+      <keyStorePassword>password</keyStorePassword>
+    </ssl>
+    <encoder>
+      <pattern>%m</pattern>
+    </encoder>
+  </appender>
+
+  <root level="info">
+    <appender-ref ref="console" />
+    <appender-ref ref="splunkhttp" />
+  </root>
+</configuration>
