@@ -1,31 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
-    <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout
-                    pattern="%style{%d{ISO8601}} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{10}}{bright,yellow}: %msg%n%throwable" />
-        </Console>
-        <SplunkHttp
-                name="splunkhttp"
-                url="${env:SPLUNK_URL}"
-                token="${env:SPLUNK_TOKEN}"
-                host="${env:SPLUNK_HOST}"
-                index="order_ui_dev"
-                type="raw"
-                source="http-event-logs"
-                sourcetype="log4j"
-                messageFormat="text"
-                disableCertificateValidation="true">
-            <PatternLayout pattern="%m" />
-        </SplunkHttp>
-
-    </Appenders>
-
-    <Loggers>
-        <!-- LOG everything at INFO level -->
-        <Root level="info">
-            <AppenderRef ref="console" />
-            <AppenderRef ref="splunkhttp" />
-        </Root>
-    </Loggers>
-</Configuration>
+<configuration>
+     <appender name="SPLUNK" class="ch.qos.logback.core.net.ssl.SSLTCPAppender">
+       <remoteHost>splunk-container</remoteHost>
+       <port>8088</port>
+       <ssl>
+         <keyStore>splunk.jks</keyStore>
+         <keyStorePassword>password</keyStorePassword>
+       </ssl>
+       <encoder>
+         <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+       </encoder>
+     </appender>
+     <root level="info">
+       <appender-ref ref="SPLUNK" />
+     </root>
+   </configuration>
