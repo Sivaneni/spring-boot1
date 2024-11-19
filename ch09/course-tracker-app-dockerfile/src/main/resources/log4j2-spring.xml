@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration status="WARN">
     <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout
-                    pattern="%style{%d{ISO8601}} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{10}}{bright,yellow}: %msg%n%throwable" />
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{ISO8601} %-5p [%t] %c{1}:%L - %m%n"/>
         </Console>
-        <SplunkHttp
-                name="splunkhttp"
-                url="${env:SPLUNK_URL}"
-                token="${env:SPLUNK_TOKEN}"
-                host="${env:SPLUNK_HOST}"
-                index="order_ui_dev"
-                type="raw"
-                source="http-event-logs"
-                sourcetype="log4j"
-                messageFormat="text"
-                disableCertificateValidation="true">
-            <PatternLayout pattern="%m" />
-        </SplunkHttp>
 
+        <Http name="SplunkHttp" url="https://splunk-container:8088/services/collector/event">
+            <Headers>
+                <Property name="Authorization">Splunk c7bee0bf-fb50-4df0-bdb6-e832cf32d7e4</Property>
+            </Headers>
+            <SSL>
+                <keyStore location="splunk.jks" password="password"/>
+                <trustStore location="splunk.jks" password="password"/>
+            </SSL>
+            <JsonLayout complete="false" compact="true">
+                <KeyValuePair key="index" value="order_ui_dev"/>
+                <KeyValuePair key="source" value="http-event-logs"/>
+                <KeyValuePair key="sourcetype" value="log4j"/>
+            </JsonLayout>
+        </Http>
     </Appenders>
 
     <Loggers>
-        <!-- LOG everything at INFO level -->
         <Root level="info">
-            <AppenderRef ref="console" />
-            <AppenderRef ref="splunkhttp" />
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="SplunkHttp"/>
         </Root>
     </Loggers>
 </Configuration>
