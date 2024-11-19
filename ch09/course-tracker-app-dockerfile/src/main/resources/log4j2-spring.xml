@@ -6,7 +6,7 @@
     </encoder>
   </appender>
 
-  <appender name="splunkhttp" class="com.splunk.logging.SplunkHttpAppender">
+  <appender name="splunkhttp">
     <url>https://splunk-container:8088</url>
     <token>${env:SPLUNK_TOKEN}</token>
     <host>${env:SPLUNK_HOST}</host>
