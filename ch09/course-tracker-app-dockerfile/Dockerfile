@@ -14,7 +14,7 @@ COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
-ENV JAVA_OPTS="-Djavax.net.ssl.trustStore=splunk.jks -Djavax.net.ssl.trustStorePassword=password -Djavax.net.debug=ssl:handshake"
+
 # Copy the Splunk certificate
 COPY splunk-cert.pem /etc/ssl/certs/splunk-cert.pem
 
