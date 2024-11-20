@@ -7,7 +7,7 @@
 
         <Http name="SplunkHttp" url="https://splunk-container:8088/services/collector/event">
             <Headers>
-                <Property name="Authorization">Splunk c7bee0bf-fb50-4df0-bdb6-e832cf32d7e4</Property>
+                <Property name="Authorization">Splunk 4b3719ea-4ccd-4787-87e4-a1230c6ca46a</Property>
             </Headers>
             <SSL>
                 <keyStore location="splunk.jks" password="password"/>
