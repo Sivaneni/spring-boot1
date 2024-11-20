@@ -6,6 +6,9 @@ COPY ${JAR_FILE} application.jar
 
 # Final stage
 FROM eclipse-temurin:17-jre
+
+ENV JAVA_OPTS="-Djavax.net.ssl.trustStore=splunk.jks -Djavax.net.ssl.trustStorePassword=password -Djavax.net.debug=ssl:handshake"
+
 WORKDIR application
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./

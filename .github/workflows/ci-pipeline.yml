@@ -1,5 +1,5 @@
 ---
-name: Spring Boot in Practice CI
+name: Spring Boot in Practice CI to dockerhub
 on:
   pull_request:
     branches:
