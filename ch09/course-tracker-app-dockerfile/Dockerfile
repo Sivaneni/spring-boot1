@@ -7,6 +7,9 @@ RUN java -Djarmode=layertools -jar application.jar extract
 
 # Final stage
 FROM eclipse-temurin:17-jre
+
+ENV JAVA_OPTS="-Djavax.net.ssl.trustStore=$JAVA_HOME/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit -Djavax.net.debug=ssl:handshake"
+
 WORKDIR application
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
