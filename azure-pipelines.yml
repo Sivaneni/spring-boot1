@@ -15,17 +15,7 @@ stages:
           name: Default
         steps:
 
-          - task: Maven@3
-            inputs:
-              mavenVersionOption: Default
-              mavenPomFile: pom.xml
-              options: ""
-              goals: clean install
-              publishJUnitResults: true
-              testResultsFiles: "**/surefire-reports/TEST-*.xml"
-              javaHomeOption: JDKVersion
-              mavenVersion: 3.8.1
-              mavenSetM2Home: true
+      
           - task: Docker@2
             displayName: Build an image
             inputs:
