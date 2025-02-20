@@ -63,8 +63,8 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          git add kubernetes/deployment.yaml
-          git commit -m "Update deployment image to ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}"
+          git add kubernetes/deployement.yaml
+          git commit -m "Update deployement image to ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}"
           git push origin HEAD:main -f
 
                
