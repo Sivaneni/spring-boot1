@@ -22,10 +22,11 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
+      - name: ensure mvnw is executable
+        run: chmod +x ${{ matrix.project }}/mvnw
       - name: Assemble and test
         run: |
           cd ${{ matrix.project }}
-          chmod +x mvnw
           ./mvnw clean install
       - name: Upload JAR file
         uses: actions/upload-artifact@v4
