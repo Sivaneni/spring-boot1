@@ -80,7 +80,7 @@ jobs:
              {
               "channel":"all-abc",
               "username": "GitHub Actions",
-              "text": "Deployment updated successfully with image ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}",
+              "text": "Deployment updated for project ${{ matrix.project }} successfully with image ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}",
               "icon_emoji": ":rocket:"
               }
         env:
