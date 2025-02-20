@@ -28,7 +28,7 @@ spec:
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
-                name: splunk-config
+                name: spring-boot-splunk-config
           name: course-tracker
           ports:
             - containerPort: 8080
