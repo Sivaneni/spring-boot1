@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - main
 jobs:
   build:
     name: Build ${{ matrix.project }}
@@ -48,3 +45,6 @@ jobs:
           context: ${{ matrix.project }}
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}
+      - name: build manifest
+        run: |
+          sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}|" kubernetes/deployement.yaml
