@@ -67,7 +67,7 @@ jobs:
           git commit -m "Update deployement image to ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}"
           git push origin HEAD:main -f
 
-               
+          
 
 
     
