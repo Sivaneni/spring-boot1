@@ -6,7 +6,6 @@ metadata:
   labels:
     app: splunk
   name: course-tracker-deployement
-  namespace: demons
 
 spec:
   replicas: 1
@@ -24,7 +23,7 @@ spec:
         app: splunk
     spec:
       containers:
-        - image: sprasanna1992/spring-boot:3f2bfbf4fc641958eae8bdcd71e7dc5902e88d2e
+        - image: sprasanna1992/spring-boot:3da6797b3f1ec7dfbff1acadfd271e2205e0ba5b
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:

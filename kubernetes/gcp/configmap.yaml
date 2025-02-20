@@ -5,7 +5,7 @@ metadata:
   namespace: demons
 data:
   SPLUNK_URL: "http://splunk:8088"
-  SPLUNK_TOKEN: "288a72b3-f143-4d7b-90ca-f7936fa99970"
+  SPLUNK_TOKEN: "yourtoken"
   SPLUNK_HOST: "splunk"
   SPLUNK_START_ARGS: "--accept-license"
   SPLUNK_PASSWORD: "yourpassword"
