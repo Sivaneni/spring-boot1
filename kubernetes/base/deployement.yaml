@@ -6,6 +6,7 @@ metadata:
   labels:
     app: splunk
   name: course-tracker-deployement
+  namespace: demons
 
 spec:
   replicas: 1
