@@ -24,7 +24,7 @@ spec:
         app: splunk
     spec:
       containers:
-        - image: sprasanna1992/spring-boot:fad7da1053db8d0f8ff4587269bc741e765eb953
+        - image: sprasanna1992/spring-boot:c438817c778ac138f53b299a0cf3d97d923d38e0
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
