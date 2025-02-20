@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: splunk-config
+  namespace: demons
+data:
+  SPLUNK_URL: "http://splunk:8088"
+  SPLUNK_TOKEN: "yourtoken"
+  SPLUNK_HOST: "splunk"
+  SPLUNK_START_ARGS: "--accept-license"
+  SPLUNK_PASSWORD: "yourpassword"

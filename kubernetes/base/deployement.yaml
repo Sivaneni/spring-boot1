@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: "2024-11-10T10:02:46Z"
+  generation: 1
+  labels:
+    app: splunk
+  name: course-tracker-deployement
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: splunk
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: splunk
+    spec:
+      containers:
+        - image: sprasanna1992/spring-boot:3da6797b3f1ec7dfbff1acadfd271e2205e0ba5b
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: splunk-config
+          name: course-tracker
+          ports:
+            - containerPort: 8080
+#          resources:
+#           limits:
+#              memory: "128Mi"
+#              cpu: "500m"
+#           requests:
+#             memory: "64Mi"
+#             cpu: "250m"
