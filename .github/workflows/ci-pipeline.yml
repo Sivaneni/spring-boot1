@@ -72,9 +72,10 @@ jobs:
     needs: update-deployment
     steps:
       - name: send slack notification
-        uses: slackapi/slack-github-action@v1.23.0
-      
+        uses: slackapi/slack-github-action@v2.0.0
         with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: webhook-trigger
           payload: |
              {
               "channel":"all-abc",
@@ -83,9 +84,7 @@ jobs:
               "icon_emoji": ":rocket:"
               }
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-    
 
-          
+
