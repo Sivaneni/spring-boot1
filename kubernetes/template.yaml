@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: splunkpv
+spec:
+  storageClassName: "filestore-example"
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+  csi:
+    driver: filestore.csi.storage.gke.io
+    volumeHandle: "modeInstance/us-south1-a/fsinstanceid/myshare"
+    volumeAttributes:
+      ip: 10.186.248.138
+      volume: myshare
+  claimRef:
+    name: splunkpvc
+    namespace: demons
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: splunkpvc
+  namespace: demons
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "filestore-example"
+  resources:
+    requests:
+      storage: 1Ti
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: filestore-example
+provisioner: filestore.csi.storage.gke.io
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+parameters:
+  tier: standard
+  network: default

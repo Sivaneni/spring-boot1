@@ -1,0 +1,154 @@
+In Kubernetes, the `persistentVolumeReclaimPolicy` determines what happens to a PersistentVolume (PV) when its associated PersistentVolumeClaim (PVC) is deleted. Here are the three main reclaim policies:
+
+### 1. Delete
+- **Description**: The `Delete` policy automatically deletes the underlying storage resource when the PVC is deleted.
+- **Use Case**: This is useful for dynamically provisioned volumes where you want the storage to be cleaned up automatically.
+- **Example**: Cloud-based storage like AWS EBS, GCE PD, or Azure Disk.
+
+### 2. Recycle (Deprecated)
+- **Description**: The `Recycle` policy deletes all the data on the volume by performing a basic scrub (e.g., `rm -rf /thevolume/*`). This policy is deprecated and not recommended for use.
+- **Use Case**: Previously used for simple reuse of storage, such as NFS volumes.
+- **Example**: NFS storage where you want to clear data before reusing the volume.
+
+### 3. Retain
+- **Description**: The `Retain` policy keeps the PV and its data intact even after the PVC is deleted. The PV moves to a `Released` state and requires manual intervention to be reused or deleted.
+- **Use Case**: This is ideal for scenarios where the data is important and should not be deleted automatically.
+- **Example**: Critical data storage where manual cleanup or data migration is necessary.
+
+### How to Set the Reclaim Policy
+You can set the reclaim policy when creating a PersistentVolume. Here’s an example YAML configuration:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: "/mnt/data"
+```
+
+### Changing the Reclaim Policy
+If you need to change the reclaim policy of an existing PV, you can use the `kubectl patch` command:
+
+```bash
+kubectl patch pv <your-pv-name> -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'
+```
+
+This command updates the reclaim policy of the specified PV to `Retain`.
+
+For more detailed information, you can refer to the [Kubernetes documentation on PersistentVolume reclaim policies](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)¹(https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/).
+
+If you have any specific questions or need further assistance, feel free to ask!
+
+Source: Conversation with Copilot, 13/11/2024
+(1) Change the Reclaim Policy of a PersistentVolume - Kubernetes. https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/.
+
+
+
+
+
+
+
+sivaneniprasanna4@cloudshell:~ (valid-chess-413806)$ kubectl describe pod splunk-daemonset-dkfwv
+Name:             splunk-daemonset-dkfwv
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             <none>
+Labels:           app=splunk
+                  controller-revision-hash=5b78488975
+                  pod-template-generation=1
+Annotations:      <none>
+Status:           Pending
+IP:               
+IPs:              <none>
+Controlled By:    DaemonSet/splunk-daemonset
+Containers:
+  splunk:
+    Image:       splunk/splunk:latest
+    Ports:       8000/TCP, 8088/TCP
+    Host Ports:  0/TCP, 0/TCP
+    Environment:
+      SPLUNK_START_ARGS:  --accept-license
+      SPLUNK_PASSWORD:    yourpassword
+    Mounts:
+      /opt/splunk/var from splunk-data (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-dz8cg (ro)
+Conditions:
+  Type           Status
+  PodScheduled   False 
+Volumes:
+  splunk-data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  splunk-pvc
+    ReadOnly:   false
+  kube-api-access-dz8cg:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/disk-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/memory-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/not-ready:NoExecute op=Exists
+                             node.kubernetes.io/pid-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/unreachable:NoExecute op=Exists
+                             node.kubernetes.io/unschedulable:NoSchedule op=Exists
+Events:
+  Type     Reason            Age                    From               Message
+  ----     ------            ----                   ----               -------
+  Warning  FailedScheduling  9m44s                  default-scheduler  0/3 nodes are available: 1 node(s) had volume node affinity conflict. preemption: 0/3 nodes are available: 3 Preemption is not helpful for scheduling.
+  Warning  FailedScheduling  4m28s (x2 over 9m43s)  default-scheduler  0/3 nodes are available: 1 node(s) had volume node affinity conflict. preemption: 0/3 nodes are available: 3 Preemption is not helpful for scheduling.
+
+working with gcp filestore:
+
+
+
+first run the below command to enable gcp filestore csi driver
+1. gcloud container clusters update cluster-1 \
+  --update-addons=GcpFilestoreCsiDriver=ENABLED \
+  --zone=us-south1-a
+   
+   *** try to add firewall rule in firewall of default network to allow port range of tcp:30000-32767  
+  
+2. create a namespace using namespace.yaml
+
+3.  create the filesore and gke cluster in same region and update the ip    address of the filestore in the
+  <<template file>> 
+
+  run template file
+  kubectl apply -f template.yaml later
+  
+4. run splunk-daemonset.yaml to create daemonset
+
+  kubectl apply -f splunk-daemonset.yaml
+
+5.  kubectl apply -f exposesplunk.yaml
+
+     kubectl get svc -n demons
+
+
+
+  to see all status 
+
+6. kubectl get nodes,pods,svc,ds,pv,pvc,sc -n demons -o wide
+
+
+  to run the splunk get the external ip of nodes with the nodeports that are exposed on service.
+
+  
+  
+  to delete all the resources
+
+  kubectl delete all --all -n demons
+
+  
