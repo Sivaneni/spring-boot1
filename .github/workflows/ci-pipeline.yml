@@ -58,7 +58,7 @@ jobs:
           token: ${{ secrets.GIT_TOKEN }}
       - name: update manifest
         run: |
-          sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}|" kubernetes/deployment.yaml
+          sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}|" kubernetes\deployement.yaml
       - name: commit and push
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
