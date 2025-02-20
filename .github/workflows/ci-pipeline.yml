@@ -22,7 +22,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - name: ensure mvnw is executable
+      - name: ensure mvnw is execute
         run: chmod +x ${{ matrix.project }}/mvnw
       - name: Assemble and test
         run: |
