@@ -22,13 +22,15 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
+      - name: ensure mvnw is execute
+        run: chmod +x ${{ matrix.project }}/mvnw
       - name: Assemble and test
         run: |
           cd ${{ matrix.project }}
-          chmod +x mvnw
+          ls -l mvnw
           ./mvnw clean install
       - name: Upload JAR file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: application-jar
           path: ${{ matrix.project }}/target/*.jar
@@ -45,6 +47,29 @@ jobs:
           context: ${{ matrix.project }}
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}
-      - name: build manifest
+  update-deployment:
+    name: Update deployment
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GIT_TOKEN }}
+      - name: update manifest
         run: |
           sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}|" kubernetes/deployement.yaml
+      - name: commit and push
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add kubernetes/deployement.yaml
+          git commit -m "Update deployement image to ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot:${{ github.sha }}"
+          git push origin HEAD:main -f
+
+               
+
+
+    
+
+          
