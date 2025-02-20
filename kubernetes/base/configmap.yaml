@@ -4,7 +4,7 @@ metadata:
   name: splunk-config
   namespace: demons
 data:
-  SPLUNK_URL: "http://spring-boot-splunk:8088"
+  SPLUNK_URL: "http://splunk:8088"
   SPLUNK_TOKEN: "288a72b3-f143-4d7b-90ca-f7936fa99970"
   SPLUNK_HOST: "splunk"
   SPLUNK_START_ARGS: "--accept-license"

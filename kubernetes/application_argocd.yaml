@@ -12,7 +12,6 @@ spec:
     repoURL: https://github.com/Sivaneni/spring-boot1.git
     targetRevision: HEAD
     kustomize:
-      namePrefix: spring-boot-
       images: []
   sources: []
   project: default

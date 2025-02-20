@@ -22,7 +22,7 @@ spec:
             - containerPort: 8088
           envFrom:
             - configMapRef:
-                name: spring-boot-splunk-config
+                name: splunk-config
           volumeMounts:
             - name: splunk-data
               mountPath: /opt/splunk/etc/apps/
