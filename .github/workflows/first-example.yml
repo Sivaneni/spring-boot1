@@ -6,6 +6,8 @@ jobs:
         steps:
         - name: welcome message
           run: echo "sample run"
+        - name: git checkout repo
+          uses: actions/checkout@v4
         
         - name: list files
           run: ls
