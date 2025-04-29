@@ -17,5 +17,4 @@ jobs:
         - name: generate ASCII artwork
           run: |
             chmod +x ascii_script.sh
-            ./Sivaneni/spring-boot1/.github/workflows/ascii_script.sh
         
