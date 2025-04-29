@@ -13,5 +13,9 @@ jobs:
           run: |  
                 ls -ltra
                 cat README.md
+                sudo apt-get install cowsay -y
         - name: generate ASCII artwork
-          run: cowsay -f dragon "welcome to github-actions"   
+          run: |
+            cowsay -f dragon "welcome to github-actions" >> dragon.txt
+            grep -i "welcome"  gragon.txt
+        
