@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/sh
 ls -ltra
 cat README.md
 sudo apt-get install cowsay -y
