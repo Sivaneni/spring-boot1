@@ -17,5 +17,7 @@ jobs:
         - name: generate ASCII artwork
           run: |
             chmod +x ascii_script.sh
+            pwd
+            ls -al | grep "ascii_script.sh"
             ./ascii_script.sh
         
