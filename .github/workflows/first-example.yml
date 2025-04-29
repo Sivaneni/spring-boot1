@@ -10,4 +10,8 @@ jobs:
           uses: actions/checkout@v4
         
         - name: list files
-          run: ls
+          run: |  
+                ls -ltra
+                cat README.md
+        - name: generate ASCII artwork
+          run: cowsay -f dragon "welcome to github-actions"   
