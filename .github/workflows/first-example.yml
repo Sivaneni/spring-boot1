@@ -17,5 +17,5 @@ jobs:
         - name: generate ASCII artwork
           run: |
             cowsay -f dragon "welcome to github-actions" >> dragon.txt
-            grep -i "welcome"  gragon.txt
+            grep -i "welcome"  dragon.txt
         
